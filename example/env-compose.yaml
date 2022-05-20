@@ -1,0 +1,10 @@
+providers:
+    - name: static
+    - name: file
+    - name: aws-secrets-manager
+env:
+    - provider: static
+      key: FOO
+      value: BAR
+    - provider: file
+      filename: ./local.env
