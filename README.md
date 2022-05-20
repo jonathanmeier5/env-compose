@@ -22,7 +22,7 @@ Now execute, for instance, a docker-compose shell:
 ```
 alias ec=env-compose
 cd example/
-ec run -c 'docker-compose run --rm bash'
+ec run -- docker-compose run --rm app bash
 ```
 
 And you will have a bash shell in a python docker image with your environment injected into it.

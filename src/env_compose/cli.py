@@ -8,10 +8,9 @@ from env_compose import environment
 from env_compose.config import Config
 
 
-def parse_command(command: str):
-    parsed_command = shlex.split(command)
-    sh_command = sh.Command(parsed_command[0])
-    sh_command = sh_command.bake(parsed_command[1:])
+def parse_command(command: tuple):
+    sh_command = sh.Command(command[0])
+    sh_command = sh_command.bake(command[1:])
     return sh_command
 
 
@@ -22,13 +21,13 @@ def cli():
 
 
 @cli.command()
-@click.option("--command", "-c", multiple=False, help="Command to run.")
-def run(command):
+@click.argument("args", nargs=-1)
+def run(args):
+    click.echo(f"Execute {args}")
     new_env = os.environ.copy()
     env = environment.update(Config(), new_env)
-    run_command = parse_command(command)
+    run_command = parse_command(args)
     run_command(_fg=True, _env=env)
-    click.echo(f"Execute {command}")
 
 
 @cli.command()
